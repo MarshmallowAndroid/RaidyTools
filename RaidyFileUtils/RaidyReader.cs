@@ -19,14 +19,14 @@ namespace RaidyFileUtils
     public struct RaidyFileEntry
     {
         /// <summary>
-        ///     The entire 12-character file name.
+        ///     The 12-character name of the file.
         /// </summary>
         /// <remarks>
         ///     When converted to a string, do not forget to trim trailing null characters (0).
         /// </remarks>
         public char[] fileName; // The file name has a maximum of 12 chars. 
         /// <summary>
-        ///     The offset of the data in the file.
+        ///     The offset of the data in the archive.
         /// </summary>
         public uint offset;
         /// <summary>
@@ -36,7 +36,7 @@ namespace RaidyFileUtils
     }
 
     /// <summary>
-    ///     Reader for Lightning Warrior Raidy asset files.
+    ///     Reader for Lightning Warrior Raidy asset packages.
     /// </summary>
     public class RaidyReader
     {
@@ -71,12 +71,12 @@ namespace RaidyFileUtils
         }
 
         /// <summary>
-        ///     The list of entries in the file.
+        ///     The list of entries in the archive.
         /// </summary>
         public RaidyFileEntry[] FileEntries { get; }
 
         /// <summary>
-        ///     Returns a stream of bytes of the specified entry in the file.
+        ///     Returns a stream of bytes of the specified entry in the archive.
         /// </summary>
         /// <param name="fileEntry">The file entry to read.</param>
         /// <returns>
