@@ -10,17 +10,20 @@ namespace Testing
 {
     class Program
     {
-        static void Main(string[] args)
+        static void ExtractGgp(string file)
         {
-            string file;
-
-            Console.Write("Path to file: ");
-            file = Console.ReadLine().Trim('\"');
-
-            if (file != string.Empty)
+            using (var reader = new RaidyGgpReader(new FileStream(file, FileMode.Open, FileAccess.Read)))
             {
-                RaidyReader reader = new RaidyReader(new FileStream(file, FileMode.Open, FileAccess.Read));
+                reader.ExtractImage(file + ".PNG");
 
+                Console.WriteLine("Extracted " + file + ".PNG");
+            }
+        }
+
+        static void ExtractAssetArchive(string file)
+        {
+            using (var reader = new RaidyReader(new FileStream(file, FileMode.Open, FileAccess.Read)))
+            {
                 string outputDirectory = file.Substring(file.LastIndexOf('\\') + 1);
                 Directory.CreateDirectory(outputDirectory);
 
@@ -39,9 +42,35 @@ namespace Testing
                     Console.WriteLine("Extracted " + sanitizedName);
                 }
             }
+        }
 
-            Console.WriteLine("Done.");
-            Console.ReadKey();
+        static void Main(string[] args)
+        {
+            string path;
+
+            do
+            {
+                Console.Write("Path to file: ");
+                path = Console.ReadLine().Trim('\"');
+
+                if (File.Exists(path))
+                {
+                    if (path.EndsWith(".GGP"))
+                        ExtractGgp(path);
+                    else
+                        ExtractAssetArchive(path);
+                }
+                else if (Directory.Exists(path))
+                {
+                    foreach (var file in Directory.GetFiles(path))
+                    {
+                        if (file.EndsWith(".GGP"))
+                            ExtractGgp(file);
+                    }
+                }
+
+                Console.WriteLine("Done.");
+            } while (path != string.Empty);
         }
     }
 }

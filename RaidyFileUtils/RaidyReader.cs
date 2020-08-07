@@ -38,7 +38,7 @@ namespace RaidyFileUtils
     /// <summary>
     ///     Reader for Lightning Warrior Raidy asset packages.
     /// </summary>
-    public class RaidyReader
+    public class RaidyReader : IDisposable
     {
         readonly BinaryReader reader;
         readonly RaidyHeader header;
@@ -74,7 +74,6 @@ namespace RaidyFileUtils
         ///     The list of entries in the archive.
         /// </summary>
         public RaidyFileEntry[] FileEntries { get; }
-
         /// <summary>
         ///     Returns a stream of bytes of the specified entry in the archive.
         /// </summary>
@@ -99,6 +98,11 @@ namespace RaidyFileUtils
             stream.Position = 0; // Reset the stream before returning it.
 
             return stream;
+        }
+
+        public void Dispose()
+        {
+            reader.Dispose();
         }
     }
 }
