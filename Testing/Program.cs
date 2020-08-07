@@ -26,7 +26,9 @@ namespace Testing
 
                 foreach (var item in reader.FileEntries)
                 {
-                    using (var fileStream = new FileStream(outputDirectory + "\\" + item.fileName, FileMode.Create, FileAccess.Write))
+                    string sanitizedName = new string(item.fileName).Trim('\0');
+
+                    using (var fileStream = new FileStream(outputDirectory + "\\" + sanitizedName, FileMode.Create, FileAccess.Write))
                     {
                         using (var memoryStream = reader.GetFile(item))
                         {
@@ -34,7 +36,7 @@ namespace Testing
                         }
                     }
 
-                    Console.WriteLine("Extracted " + item.fileName);
+                    Console.WriteLine("Extracted " + sanitizedName);
                 }
             }
 
