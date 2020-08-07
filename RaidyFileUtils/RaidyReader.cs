@@ -14,17 +14,29 @@ namespace RaidyFileUtils
     }
 
     /// <summary>
-    /// Defines the structure of each entry in the table of contents.
+    ///     Defines the structure of each entry in the table of contents.
     /// </summary>
     public struct RaidyFileEntry
     {
+        /// <summary>
+        ///     The entire 12-character file name.
+        /// </summary>
+        /// <remarks>
+        ///     When converted to a string, do not forget to trim trailing null characters (0).
+        /// </remarks>
         public char[] fileName; // The file name has a maximum of 12 chars. 
+        /// <summary>
+        ///     The offset of the data in the file.
+        /// </summary>
         public uint offset;
+        /// <summary>
+        ///     The length of the data.
+        /// </summary>
         public uint length;
     }
 
     /// <summary>
-    /// Reader for Lightning Warrior Raidy asset files.
+    ///     Reader for Lightning Warrior Raidy asset files.
     /// </summary>
     public class RaidyReader
     {
@@ -32,7 +44,7 @@ namespace RaidyFileUtils
         readonly RaidyHeader header;
 
         /// <summary>
-        /// Initializes a new instances of the <see cref="RaidyReader"/> class with the specified stream.
+        ///     Initializes a new instance of the <see cref="RaidyReader"/> class with the specified stream.
         /// </summary>
         /// <param name="source">The stream to read from.</param>
         public RaidyReader(Stream source)
@@ -59,15 +71,17 @@ namespace RaidyFileUtils
         }
 
         /// <summary>
-        /// The list of entries in the file.
+        ///     The list of entries in the file.
         /// </summary>
         public RaidyFileEntry[] FileEntries { get; }
 
         /// <summary>
-        /// Returns a stream of bytes of the specified entry in the file.
+        ///     Returns a stream of bytes of the specified entry in the file.
         /// </summary>
         /// <param name="fileEntry">The file entry to read.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A <see cref="MemoryStream"/> containing the data of a file selected by <paramref name="fileEntry"/>.
+        /// </returns>
         public Stream GetFile(RaidyFileEntry fileEntry)
         {
             MemoryStream stream = new MemoryStream();
