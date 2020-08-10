@@ -5,7 +5,7 @@ The following files with no extensions found in the game directory contain the g
 File|Contents
 ----|-------
 BGM|Background music, `OGG` format
-DATA|*Unknown, `ZMZ` format*
+DATA|Map data, `ZMZ` format
 GRP|Images, `GGP` format
 SE|Sound effects, `OGG` format
 SNR|*Unknown, `SNR` format, most likely scripts*
